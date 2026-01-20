@@ -1,0 +1,22 @@
+name: Factory
+version: '1.0.0-SNAPSHOT'
+main: org.RisingSMP.factory.Factory
+api-version: '1.21'
+author: RisingSMP-DEVteam
+
+commands:
+  givefactory:
+    description: Give a factory block (OP only)
+    usage: /givefactory <input|belt|intermediate|final>
+    permission: assemblyline.op
+    permission-message: "§cNon hai i permessi per usare questo comando!"
+  factoryconfig:
+    description: Configura le fabbriche
+    usage: /factoryconfig <INTERMEDIATE|FINAL>
+    permission: assemblyline.op
+    permission-message: "§cNon hai i permessi per usare questo comando!"
+
+permissions:
+  assemblyline.op:
+    description: Allows the player to use /givefactory
+    default: op
