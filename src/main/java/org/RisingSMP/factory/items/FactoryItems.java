@@ -14,6 +14,8 @@ public class FactoryItems {
     /* =========================
        KEYS
        ========================= */
+    public static final NamespacedKey LEVEL_KEY =
+            new NamespacedKey(Factory.instance, "level");
 
     public static NamespacedKey TYPE_KEY;
 

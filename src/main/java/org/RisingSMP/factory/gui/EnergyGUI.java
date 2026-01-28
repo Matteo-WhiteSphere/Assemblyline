@@ -50,13 +50,13 @@ public class EnergyGUI {
             for (var chunk : world.getLoadedChunks()) {
                 int minY = world.getMinHeight();
                 int maxY = world.getMaxHeight();
-                int bx = chunk.getX() << 4;
-                int bz = chunk.getZ() << 4;
 
                 for (int x = 0; x < 16; x++) {
                     for (int z = 0; z < 16; z++) {
                         for (int y = minY; y < maxY; y++) {
-                            Block block = world.getBlockAt(bx + x, y, bz + z);
+                            int blockX = chunk.getX() * 16 + x;
+                            int blockZ = chunk.getZ() * 16 + z;
+                            Block block = world.getBlockAt(blockX, y, blockZ);
                             if (!(block.getState() instanceof TileState state)) continue;
                             String type = state.getPersistentDataContainer()
                                     .get(FactoryItems.FACTORY_KEY, org.bukkit.persistence.PersistentDataType.STRING);
@@ -82,19 +82,23 @@ public class EnergyGUI {
             for (var chunk : world.getLoadedChunks()) {
                 int minY = world.getMinHeight();
                 int maxY = world.getMaxHeight();
-                int bx = chunk.getX() << 4;
-                int bz = chunk.getZ() << 4;
 
                 for (int x = 0; x < 16; x++) {
                     for (int z = 0; z < 16; z++) {
                         for (int y = minY; y < maxY; y++) {
-                            Block block = world.getBlockAt(bx + x, y, bz + z);
+                            int blockX = chunk.getX() * 16 + x;
+                            int blockZ = chunk.getZ() * 16 + z;
+                            Block block = world.getBlockAt(blockX, y, blockZ);
+                            
+                            // Skip problematic blocks that can't be TileState
+                            if (!isTileStateCompatible(block)) continue;
+                            
                             if (!(block.getState() instanceof TileState state)) continue;
                             String type = state.getPersistentDataContainer()
                                     .get(FactoryItems.FACTORY_KEY, org.bukkit.persistence.PersistentDataType.STRING);
                             if (type == null || !type.equals(typeKey)) continue;
 
-                            if (EnergyManager.hasEnergy(block)) mat = Material.LIME_WOOL;
+                            if (EnergyManager.consumeEnergy(block, 1)) mat = Material.LIME_WOOL;
                         }
                     }
                 }
@@ -102,6 +106,14 @@ public class EnergyGUI {
         }
 
         inv.setItem(slot, createItem(mat, displayName));
+    }
+    
+    private boolean isTileStateCompatible(Block block) {
+        try {
+            return block.getState() instanceof TileState;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private ItemStack createItem(Material mat, String name) {

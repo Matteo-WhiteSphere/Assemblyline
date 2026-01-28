@@ -9,21 +9,32 @@ import org.bukkit.block.TileState;
 
 public class EnergyManager {
 
-    public static boolean hasEnergy(Block machineBlock) {
+    public static boolean consumeEnergy(Block machineBlock, int cost) {
 
-        for (int x = -64; x <= 64; x++) {
-            for (int y = -16; y <= 16; y++) {
-                for (int z = -64; z <= 64; z++) {
+        int available = 0;
 
-                    Block b = machineBlock.getRelative(x, y, z);
+        for (int dx = -80; dx <= 80; dx++) {
+            for (int dy = -20; dy <= 20; dy++) {
+                for (int dz = -80; dz <= 80; dz++) {
+
+                    Block b = machineBlock.getRelative(dx, dy, dz);
 
                     GeneratorType type = getGeneratorType(b);
                     if (type == null) continue;
 
                     GeneratorMachine gen = new GeneratorMachine(b, type);
-                    gen.tick();
 
-                    if (gen.isActive()) return true;
+                    if (!gen.isActive()) continue;
+
+                    int range = gen.getRange();
+
+                    if (Math.abs(dx) > range || Math.abs(dz) > range) continue;
+
+                    available += gen.getProduction();
+
+                    if (available >= cost) {
+                        return true; // energia sufficiente
+                    }
                 }
             }
         }

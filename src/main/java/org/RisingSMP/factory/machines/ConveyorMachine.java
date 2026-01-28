@@ -9,15 +9,24 @@ import org.RisingSMP.factory.Factory;
 import org.RisingSMP.factory.FactoryItems;
 import org.RisingSMP.factory.energy.EnergyManager;
 
+import static io.papermc.paper.registry.keys.ItemTypeKeys.COAL;
+import static org.RisingSMP.factory.machines.GeneratorMachine.GeneratorType.*;
+
 public class ConveyorMachine extends Machine {
 
     public ConveyorMachine(Block block) {
         super(block);
     }
 
+    public int getLevel() {
+        if (!(block.getState() instanceof TileState state)) return 1;
+        return state.getPersistentDataContainer()
+                .getOrDefault(FactoryItems.LEVEL_KEY, PersistentDataType.INTEGER, 1);
+    }
+
     @Override
     public void process(Item item) {
-        if (!EnergyManager.hasEnergy(block)) return;
+        if (!EnergyManager.consumeEnergy(block, getEnergyCost())) return;
         if (!(block.getState() instanceof TileState state)) return;
 
         String facing = state.getPersistentDataContainer()

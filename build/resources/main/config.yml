@@ -1,0 +1,111 @@
+# Factory Plugin Configuration
+# This file contains all settings for the Factory plugin
+
+# =========================
+# MACHINE SETTINGS
+# =========================
+machines:
+  # Maximum level machines can reach
+  max_level: 10
+  
+  # Upgrade costs for each level (Emerald Blocks)
+  # Level 1-10 costs
+  upgrade_costs:
+    - 10
+    - 25
+    - 50
+    - 100
+    - 200
+    - 400
+    - 800
+    - 1600
+    - 3200
+    - 6400
+
+# =========================
+# ENERGY SETTINGS
+# =========================
+energy:
+  # How often energy is distributed (in ticks, 20 ticks = 1 second)
+  distribution_interval: 20
+  
+  # Maximum energy buffer capacity per machine
+  buffer_capacity: 1000
+  
+  # Enable/disable energy system
+  enable_system: true
+
+# =========================
+# VEHICLES SETTINGS
+# =========================
+vehicles:
+  # Enable integration with Vehicles plugin
+  enable_integration: true
+  
+  # Require fuel for vehicles
+  require_fuel: true
+  
+  # Fuel consumption rate multiplier
+  fuel_consumption_rate: 1.0
+
+# =========================
+# PRODUCTION SETTINGS
+# =========================
+production:
+  # Enable weapon production
+  enable_weapons: true
+  
+  # Enable vehicle production
+  enable_vehicles: true
+  
+  # Production speed multiplier
+  production_speed_multiplier: 1.0
+
+# =========================
+# GUI SETTINGS
+# =========================
+gui:
+  # Enable GUI animations
+  enable_animations: true
+  
+  # Enable GUI sounds
+  enable_sounds: true
+  
+  # GUI update interval (in ticks)
+  update_interval: 5
+
+# =========================
+# NOTIFICATION SETTINGS
+# =========================
+notifications:
+  # Enable notifications
+  enable: true
+  
+  # Cooldown between notifications (in milliseconds)
+  cooldown_ms: 3000
+  
+  # Sound volume for notifications (0.0 to 1.0)
+  sound_volume: 0.8
+
+# =========================
+# PERFORMANCE SETTINGS
+# =========================
+performance:
+  # Enable performance optimizations
+  enable_optimization: true
+  
+  # Maximum concurrent machines processing
+  max_concurrent_machines: 100
+  
+  # Cleanup interval for unused data (in ticks)
+  cleanup_interval: 6000
+
+# =========================
+# DEBUG SETTINGS
+# =========================
+debug:
+  # Enable debug logging
+  enable_logging: false
+  
+  # Verbose debug output
+  verbose: false

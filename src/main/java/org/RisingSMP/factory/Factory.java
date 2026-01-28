@@ -1,5 +1,6 @@
 package org.RisingSMP.factory;
 
+import org.RisingSMP.factory.listeners.FactoryCentralGUIListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.RisingSMP.factory.items.FactoryItems;
@@ -14,6 +15,20 @@ import org.RisingSMP.factory.listeners.FactoryListener;
 import org.RisingSMP.factory.gui.FactoryGUI;
 import org.RisingSMP.factory.commands.EnergyGUICommand;
 import org.RisingSMP.factory.energy.EnergyManager;
+import org.RisingSMP.factory.vehicles.VehiclesIntegration;
+import org.RisingSMP.factory.config.FactoryConfig;
+import org.RisingSMP.factory.permissions.PermissionManager;
+import org.RisingSMP.factory.holograms.HologramManager;
+import org.RisingSMP.factory.performance.PerformanceManager;
+import org.RisingSMP.factory.statistics.PlayerStatistics;
+import org.RisingSMP.factory.achievements.AchievementSystem;
+import org.RisingSMP.factory.autocraft.AutoCraftingManager;
+import org.RisingSMP.factory.resourcepack.ResourcePackManager;
+import org.RisingSMP.factory.resourcepack.ResourcePackCommand;
+import org.RisingSMP.factory.production.CompleteProductionSystem;
+import org.RisingSMP.factory.commands.ProductionCommand;
+import org.RisingSMP.factory.listeners.ProductionGUIListener;
+import org.RisingSMP.factory.listeners.InputGUIListener;
 
 import java.util.UUID;
 
@@ -24,12 +39,32 @@ public final class Factory extends JavaPlugin {
 
     public static Factory instance;
     public FactoryGUI factoryGUI;
+    
+    public static Factory getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
         instance = this;
 
         FactoryItems.init();
+        
+        // Inizializza integrazione Vehicles plugin
+        VehiclesIntegration.initialize();
+        
+        // Carica configurazione
+        FactoryConfig.loadConfig(this);
+        
+        // Inizializza sistemi avanzati
+        PermissionManager.initialize();
+        HologramManager.initialize();
+        PerformanceManager.initialize(this);
+        PlayerStatistics.initialize(this);
+        AchievementSystem.initialize();
+        AutoCraftingManager.initialize();
+        ResourcePackManager.initialize(this);
+        CompleteProductionSystem.initialize();
 
         startGeneratorScheduler();
 
@@ -38,6 +73,16 @@ public final class Factory extends JavaPlugin {
         this.getCommand("energygui").setExecutor(new EnergyGUICommand());
         this.getCommand("givefactory").setExecutor(new GiveFactoryCommand());
         this.getCommand("factoryconfig").setExecutor(new FactoryConfigCommand());
+        this.getCommand("factoryrp").setExecutor(new ResourcePackCommand());
+        this.getCommand("factory").setExecutor(new ProductionCommand());
+
+        getServer().getPluginManager().registerEvents(
+                new FactoryCentralGUIListener(), this
+        );
+
+        getServer().getPluginManager().registerEvents(new ProductionGUIListener(), this);
+        getServer().getPluginManager().registerEvents(new InputGUIListener(), this);
+
 
         getServer().getPluginManager().registerEvents(new FactoryListener(this), this);
 

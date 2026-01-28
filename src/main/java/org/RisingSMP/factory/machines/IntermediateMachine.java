@@ -18,12 +18,20 @@ public class IntermediateMachine extends Machine {
     @Override
     public void process(Item item) {
         ItemStack stack = item.getItemStack();
-        Map<Material, Material> recipes = FactoryGUI.factoryRecipes.get("INTERMEDIATE");
+        Map<Material, Material> recipes =
+                FactoryGUI.factoryRecipes.get("INTERMEDIATE");
 
-        if (!EnergyManager.hasEnergy(block)) return;
+        // ✅ consumo energia reale
+        if (!EnergyManager.consumeEnergy(block, getEnergyCost())) return;
+
         if (recipes != null && recipes.containsKey(stack.getType())) {
             stack.setType(recipes.get(stack.getType()));
             item.setItemStack(stack);
         }
+    }
+
+    @Override
+    public int getEnergyCost() {
+        return 2;
     }
 }

@@ -1,13 +1,13 @@
 name: Factory
-version: '1.0.0-SNAPSHOT'
+version: '1.0.5'
 main: org.RisingSMP.factory.Factory
-api-version: '1.21'
+api-version: '1.21.4'
 author: RisingSMP-DEVteam
 
 commands:
   givefactory:
     description: Give a factory block (OP only)
-    usage: /givefactory <input|belt|intermediate|final>
+    usage: /givefactory <input|belt|intermediate|final|material> [quantità]
     permission: assemblyline.op
     permission-message: "§cNon hai i permessi per usare questo comando!"
   factoryconfig:
@@ -15,11 +15,35 @@ commands:
     usage: /factoryconfig <INTERMEDIATE|FINAL>
     permission: assemblyline.op
     permission-message: "§cNon hai i permessi per usare questo comando!"
+  energygui:
+    description: Apre il pannello di controllo energia
+    usage: /energygui
+    permission: factory.energygui
+    permission-message: "§cNon hai i permessi per usare questo comando!"
+  factoryrp:
+    description: Gestione resource pack personalizzato
+    usage: /factoryrp <status|send|reload|generate>
+    permission: factory.admin
+    permission-message: "§cNon hai i permessi per usare questo comando!"
+  factory:
+    description: Sistema produzione completo
+    usage: /factory [list|craft|info|categories]
+    permission: factory.production
+    permission-message: "§cNon hai i permessi per usare questo comando!"
 
 permissions:
   assemblyline.op:
     description: Allows the player to use /givefactory
     default: op
+  factory.energygui:
+    description: Allows the player to use /energygui
+    default: true
+  factory.admin:
+    description: Allows the player to use admin commands
+    default: op
+  factory.production:
+    description: Allows the player to use production system
+    default: true
 
 depend: [QualityArmory]
 

@@ -16,4 +16,12 @@ public abstract class Machine {
      * Logica che viene eseguita ogni tick sugli item sopra il blocco
      */
     public abstract void process(Item item);
+
+    public int getEnergyCost() {
+        return 1; // default
+    }
+    
+    public Block getBlock() {
+        return block;
+    }
 }

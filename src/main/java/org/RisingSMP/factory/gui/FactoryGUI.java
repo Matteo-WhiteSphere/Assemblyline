@@ -23,7 +23,10 @@ public class FactoryGUI implements Listener {
     public static final Map<String, Map<Material, Material>> factoryRecipes = new HashMap<>();
 
     // mappa blocco FINAL -> arma scelta
-    public static final Map<String, String> factoryWeapons = new HashMap<>();
+    public static final Map<String, String> factoryWeaponsType = new HashMap<>();
+    
+    // mappa blocco FINAL -> ItemStack dell'arma
+    public static final Map<String, ItemStack> factoryWeapons = new HashMap<>();
 
     public FactoryGUI(Factory plugin) {
         this.plugin = plugin;
@@ -76,7 +79,8 @@ public class FactoryGUI implements Listener {
 
         if (factoryType.equals("FINAL")) {
             String weaponName = clicked.getItemMeta().getDisplayName();
-            factoryWeapons.put(factoryType, weaponName);
+            factoryWeaponsType.put(factoryType, weaponName);
+            factoryWeapons.put(factoryType, clicked.clone());
             player.sendMessage("§aFinalMachine ora produrrà: " + weaponName);
         } else {
             // esempio: salva input->output semplice

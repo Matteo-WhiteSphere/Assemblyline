@@ -21,9 +21,15 @@ public class InputMachine extends Machine {
         // lavora solo con pullFromChest
     }
 
+    @Override
+    public int getEnergyCost() {
+        return 1; // costo per estrarre 1 item
+    }
+
     public void pullFromChest() {
 
-        if (!EnergyManager.hasEnergy(block)) return;
+        // ✅ consumo energia reale
+        if (!EnergyManager.consumeEnergy(block, getEnergyCost())) return;
 
         // direzione (per ora fissa)
         BlockFace facing = BlockFace.NORTH;
