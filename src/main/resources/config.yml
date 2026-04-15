@@ -109,3 +109,24 @@ debug:
   
   # Verbose debug output
   verbose: false
+
+# =========================
+# RESOURCE PACK SETTINGS
+# =========================
+# These settings are also stored in resourcepack.yml (auto-generated on first run).
+# Values below serve as documentation of the available options.
+resourcepack:
+  # URL to a hosted resource pack (leave empty to use the auto-generated pack)
+  resource_pack_url: ""
+  
+  # Force re-download of the resource pack on startup
+  force_download: false
+  
+  # Automatically send the resource pack to players on join
+  auto_send: true
+  
+  # Message shown to players when the resource pack is sent
+  prompt_message: "§6Factory Plugin requires a custom resource pack to display machines correctly!"
+  
+  # Kick players who decline the resource pack
+  kick_on_decline: false

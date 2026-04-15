@@ -1,5 +1,5 @@
 name: Factory
-version: '1.0.5'
+version: '${version}'
 main: org.RisingSMP.factory.Factory
 api-version: '1.21.4'
 author: RisingSMP-DEVteam
@@ -46,4 +46,5 @@ permissions:
     default: true
 
 depend: [QualityArmory]
+softdepend: [Vehicles]
 
